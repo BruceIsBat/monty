@@ -10,13 +10,19 @@ void push(stack_t **stack, unsigned int line_number)
 	int value;
 	stack_t *new_node;
 
-	if (argument == NULL || !is_integer(argument))
+	if (argument == NULL)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
 	value = atoi(argument);
+
+	if (value == 0)
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
 
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
@@ -76,12 +82,6 @@ void pint(stack_t **stack, unsigned int line_number)
  */
 int is_integer(const char *str)
 {
-	if (*str == '-')
-		str++;
-
-	if (*str == '\0')
-		return (0);
-
 	while (*str != '\0')
 	{
 		if (!isdigit(*str))
