@@ -10,7 +10,7 @@ void push(stack_t **stack, unsigned int line_number)
 	int value;
 	stack_t *new_node;
 
-	if (argument == NULL)
+	if (argument == NULL || !is_integer(argument))
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
@@ -54,8 +54,6 @@ void pall(stack_t **stack, unsigned int line_number)
 	}
 }
 
-#include "monty.h"
-
 /**
  * pint - Prints the value at the top of the stack.
  * @stack: A pointer to the stack.
@@ -70,4 +68,26 @@ void pint(stack_t **stack, unsigned int line_number)
 	}
 
 	printf("%d\n", (*stack)->n);
+}
+/**
+ * is_integer - check if its integer
+ * @str: str given
+ * Return: 1
+ */
+int is_integer(const char *str)
+{
+	if (*str == '-')
+		str++;
+
+	if (*str == '\0')
+		return (0);
+
+	while (*str != '\0')
+	{
+		if (!isdigit(*str))
+			return (0);
+		str++;
+	}
+
+	return (1);
 }

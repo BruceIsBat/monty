@@ -1,4 +1,4 @@
-push 1
+push h
 pint
 push 2
 pint
