@@ -45,7 +45,6 @@ void read_file(const char *filename, stack_t **stack)
 		fprintf(stderr, "Error: Can't open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
-
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
 		char *opcode = strtok(line, " \n");
@@ -64,6 +63,8 @@ void read_file(const char *filename, stack_t **stack)
 			pint(stack, line_number);
 		else if (strcmp(opcode, "pop") == 0)
 			pop(stack, line_number);
+		else if (strcmp(opcode, "swap") == 0)
+			swap(stack, line_number);
 		else
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
@@ -73,6 +74,5 @@ void read_file(const char *filename, stack_t **stack)
 
 		line_number++;
 	}
-
 	fclose(file);
 }
