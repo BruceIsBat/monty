@@ -3,13 +3,22 @@
  * main - main function
  * Return: 0
  */
-int main(void)
+int main(int argc, char *argv[])
 {
+
+	FILE *file;
 	stack_t *stack = NULL;
 	char line[100];
 	unsigned int line_number = 1;
+	file = fopen(argv[1], "r");
 
-	while (fgets(line, sizeof(line), stdin) != NULL)
+	if (argc != 2)
+	{
+		fprintf(stderr, "Usage: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+
+	while (fgets(line, sizeof(line), file) != NULL)
 	{
 		char *opcode = strtok(line, " \n");
 
@@ -33,11 +42,14 @@ int main(void)
 		else
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+			fclose(file);
 			exit(EXIT_FAILURE);
 		}
 
 		line_number++;
 	}
+	fclose(file);
+
 	while (stack != NULL)
 	{
 		stack_t *temp = stack;
