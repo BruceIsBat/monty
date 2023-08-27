@@ -47,5 +47,5 @@ void push(stack_t **stack, unsigned int line_number);
  * @line_number: The line number in the input.
  */
 void pall(stack_t **stack, unsigned int line_number);
-
+void pint(stack_t **stack, unsigned int line_number);
 #endif
