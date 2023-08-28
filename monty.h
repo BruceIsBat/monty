@@ -51,4 +51,7 @@ void read_file(const char *filename, stack_t **stack);
 int is_integer(const char *str);
 void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
+void add(stack_t  **stack, unsigned int line_number);
+void sub(stack_t  **stack, unsigned int line_number);
+void proc_opcode(stack_t **stack, const char *opcode, unsigned int line_number);
 #endif

@@ -17,15 +17,6 @@ int main(int argc, char *argv[])
 
 	read_file(argv[1], &stack);
 
-	while (stack != NULL)
-	{
-		stack_t *temp = stack;
-
-		stack = stack->next;
-
-		free(temp);
-	}
-
 	return (0);
 }
 /**
@@ -49,30 +40,40 @@ void read_file(const char *filename, stack_t **stack)
 	{
 		char *opcode = strtok(line, " \n");
 
-		if (opcode == NULL)
+		if (opcode != NULL)
 		{
-			line_number++;
-			continue;
-		}
-
-		if (strcmp(opcode, "push") == 0)
-			push(stack, line_number);
-		else if (strcmp(opcode, "pall") == 0)
-			pall(stack, line_number);
-		else if (strcmp(opcode, "pint") == 0)
-			pint(stack, line_number);
-		else if (strcmp(opcode, "pop") == 0)
-			pop(stack, line_number);
-		else if (strcmp(opcode, "swap") == 0)
-			swap(stack, line_number);
-		else
-		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-			fclose(file);
-			exit(EXIT_FAILURE);
+			proc_opcode(stack, opcode, line_number);
 		}
 
 		line_number++;
 	}
 	fclose(file);
+}
+/**
+ * proc_opcode - process the given codes
+ * @stack: stack pointer
+ * @opcode: the monty code
+ * @line_number: the number
+ */
+void proc_opcode(stack_t **stack, const char *opcode, unsigned int line_number)
+{
+	if (strcmp(opcode, "push") == 0)
+		push(stack, line_number);
+	else if (strcmp(opcode, "pall") == 0)
+		pall(stack, line_number);
+	else if (strcmp(opcode, "pint") == 0)
+		pint(stack, line_number);
+	else if (strcmp(opcode, "pop") == 0)
+		pop(stack, line_number);
+	else if (strcmp(opcode, "swap") == 0)
+		swap(stack, line_number);
+	else if (strcmp(opcode, "add") == 0)
+		add(stack, line_number);
+	else if (strcmp(opcode, "sub") == 0)
+		sub(stack, line_number);
+	else
+	{
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+		exit(EXIT_FAILURE);
+	}
 }
